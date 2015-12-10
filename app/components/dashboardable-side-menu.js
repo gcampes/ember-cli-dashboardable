@@ -1,0 +1,1 @@
+export { default } from 'ember-cli-dashboardable/components/dashboardable-side-menu';

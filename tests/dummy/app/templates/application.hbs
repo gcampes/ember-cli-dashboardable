@@ -1,3 +1,19 @@
-<h2 id="title">Welcome to Ember</h2>
-
-{{outlet}}
+<div class="dashboardable-side-menu">
+  <div class="side-menu-header">
+    <div class="title">
+      <i class="fa fa-line-chart"></i>
+      <h4>Dashboard</h4>
+    </div>
+  </div>
+  <ul class="side-menu-list">
+    <li class="side-menu-item large">Item</li>
+    <li class="side-menu-item">Item</li>
+    <li class="side-menu-item">Item</li>
+    <li class="side-menu-item active">Item</li>
+    <li class="side-menu-item">Item</li>
+  </ul>
+</div>
+<!-- {{dashboardable-side-menu}} -->
+<div class="dashboardable-dashboard-container">
+  {{outlet}}
+</div>
