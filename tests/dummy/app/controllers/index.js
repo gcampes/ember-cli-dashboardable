@@ -17,6 +17,7 @@ export default Ember.Controller.extend({
         'options': {
           'icon': 'bar',
           'type': 'bar',
+          'classesToAdd': 'custom-class-bar',
           'data': this.randomBarChartData(),
           'options': this.get('chartOptions')
         }
@@ -28,6 +29,7 @@ export default Ember.Controller.extend({
         'options': {
           'icon': 'bar',
           'type': 'horizontal-bar',
+          'classesToAdd': 'custom-class-horizontal-bar',
           'data': this.randomBarChartData(),
           'options': this.get('chartOptions')
         }
@@ -39,6 +41,7 @@ export default Ember.Controller.extend({
         'options': {
           'icon': 'pie',
           'type': 'pie',
+          'classesToAdd': 'custom-class-pie',
           'data': this.randomPieChartData(),
           'options': this.get('chartOptions')
         }
@@ -50,6 +53,7 @@ export default Ember.Controller.extend({
         'options': {
           'icon': 'pie',
           'type': 'doughnut',
+          'classesToAdd': 'custom-class-doughnut',
           'data': this.randomDoughnutChartData(),
           'options': this.get('chartOptions')
         }

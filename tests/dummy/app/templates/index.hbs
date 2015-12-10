@@ -6,7 +6,7 @@
 
 
 {{#each dashboard.components as |item|}}
-  {{#dashboardable-card class="abc"}}
+  {{#dashboardable-card classesToAdd=item.options.classesToAdd}}
     <h4 class="{{item.options.icon}}-chart">Lorem Ipsum</h4>
     {{component item.name options=item.options}}
   {{/dashboardable-card}}
