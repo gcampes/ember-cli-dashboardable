@@ -1,3 +1,19 @@
+<div class="buttons">
+  <button type="button" name="button" {{action 'addComponent'}}>Add</button>
+  <button type="button" name="button" {{action 'clearDashboard'}}>Clear</button>
+</div>
+
+
+{{#each dashboard.components as |item|}}
+  {{#dashboardable-card class="abc"}}
+    <h4 class="{{item.options.icon}}-chart">Lorem Ipsum</h4>
+    {{component item.name options=item.options}}
+  {{/dashboardable-card}}
+{{/each}}
+
+
+<!--
+
 {{#dashboardable-card}}
   <h4 class="bar-chart">Lorem Ipsum</h4>
   {{ember-chartnew type='horizontal-bar' data=barChartData options=chartOptions}}
@@ -34,4 +50,4 @@
 {{#dashboardable-card}}
   <h4 class="bar-chart">Lorem Ipsum</h4>
   {{ember-chartnew type='horizontal-bar' data=barChartData options=chartOptions}}
-{{/dashboardable-card}}
+{{/dashboardable-card}} -->

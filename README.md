@@ -1,6 +1,6 @@
 # Ember-cli-dashboardable
 
-This README outlines the details of collaborating on this Ember addon.
+The idea of this addon is to provide an easy way to add components to a dashboard, from anywhere on your application, via services.
 
 ## Installation
 
@@ -12,15 +12,3 @@ This README outlines the details of collaborating on this Ember addon.
 
 * `ember server`
 * Visit your app at http://localhost:4200.
-
-## Running Tests
-
-* `npm test` (Runs `ember try:testall` to test your addon against multiple Ember versions)
-* `ember test`
-* `ember test --server`
-
-## Building
-
-* `ember build`
-
-For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).

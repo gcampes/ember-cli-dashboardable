@@ -1,18 +1,77 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  barChartData: {
-    labels: ["Open", "In Progress", "Closed"],
-    datasets: [
-      {
-        fillColor: "rgba(0, 182, 214, 1)",
-        data: [95,53,99],
-        title: "2015"
-      }
-    ]
+  init(){
+    for(let i = 10; i > 0 ; i--){
+      setTimeout(() => {
+        this.dashboard.addComponent(this.getRandomComponent());
+      }, 250 * i);
+    }
+  },
+
+  getRandomComponent(){
+    let random = Math.random();
+    if(random < 0.25){
+      return {
+        'name': 'dashboardable-chart',
+        'options': {
+          'icon': 'bar',
+          'type': 'bar',
+          'data': this.randomBarChartData(),
+          'options': this.get('chartOptions')
+        }
+      };
+    }
+    else if(random < 0.50){
+      return {
+        'name': 'dashboardable-chart',
+        'options': {
+          'icon': 'bar',
+          'type': 'horizontal-bar',
+          'data': this.randomBarChartData(),
+          'options': this.get('chartOptions')
+        }
+      };
+    }
+    else if(random < 0.75){
+      return {
+        'name': 'dashboardable-chart',
+        'options': {
+          'icon': 'pie',
+          'type': 'pie',
+          'data': this.randomPieChartData(),
+          'options': this.get('chartOptions')
+        }
+      };
+    }
+    else {
+      return {
+        'name': 'dashboardable-chart',
+        'options': {
+          'icon': 'pie',
+          'type': 'doughnut',
+          'data': this.randomDoughnutChartData(),
+          'options': this.get('chartOptions')
+        }
+      };
+    }
+  },
+
+  randomBarChartData(){
+    return {
+      labels: ["Open", "In Progress", "Closed"],
+      datasets: [
+        {
+          fillColor: "rgb(0, 109, 179)",
+          data: [Math.round(Math.random()*100), Math.round(Math.random()*100), Math.round(Math.random()*100)],
+          title: "2015"
+        }
+      ]
+    };
   },
 
   chartOptions: {
+    yAxisMinimumInterval: 1,
     animationSteps: 80,
     responsive: true,
     inGraphDataShow: true,
@@ -27,74 +86,88 @@ export default Ember.Controller.extend({
     scaleFontColor: "rgb(29, 29, 29)"
   },
 
-  pieChartData: [
-    {
-        value : 30,
-        color: "#042334",
-        title : "January"
-    },
-    {
-        value : 90,
-        color: "#0a5b88",
-        title : "February"
-    },
-    {
-        value : 24,
-        color: "#21323D",
-        title : "March"
-    },
-    {
-        value : 58,
-        color: "#05131b",
-        title : "April"
-    },
-    {
-        value : 82,
-        color: "#1a8ecd",
-        title : "May"
-    },
-    {
-        value : 8,
-        color: "#00507c",
-        title : "June"
-    }
-  ],
+  randomPieChartData(){
+    return [
+      {
+          value : Math.round(Math.random()*100),
+          color: "#00a5ff",
+          title : "January"
+      },
+      {
+          value : Math.round(Math.random()*100),
+          color: "#008cda",
+          title : "February"
+      },
+      {
+          value : Math.round(Math.random()*100),
+          color: "#006db3",
+          title : "March"
+      },
+      {
+          value : Math.round(Math.random()*100),
+          color: "#005e95",
+          title : "April"
+      },
+      {
+          value : Math.round(Math.random()*100),
+          color: "#004b74",
+          title : "May"
+      },
+      {
+          value : Math.round(Math.random()*100),
+          color: "#003553",
+          title : "June"
+      }
+    ];
+  },
 
-  doughnutChartData: [
-    {
-        value : 30,
-        color: "#00507c",
-        title : "January"
-    },
-    {
-        value : 90,
-        color: "#1a8ecd",
-        title : "February",
-        expandInRadius : 0.2,
-        expandOutRadius : 0.2
-    },
-    {
-        value : 24,
-        color: "#05131b",
-        title : "March"
-    },
-    {
-        value : 58,
-        color: "#0a5b88",
-        title : "April",
-        expandInRadius : -0.2
-    },
-    {
-        value : 82,
-        color: "#042334",
-        title : "May"
-    },
-    {
-        value : 8,
-        color: "#4387ac",
-        title : "June",
-        expandOutRadius : 0.3
-    }
-  ]
+  randomDoughnutChartData(){
+    return [
+      {
+          value : Math.round(Math.random()*100),
+          color: "#00a5ff",
+          title : "January"
+      },
+      {
+          value : Math.round(Math.random()*100),
+          color: "#008cda",
+          title : "February",
+          expandInRadius : 0.2,
+          expandOutRadius : 0.2
+      },
+      {
+          value : Math.round(Math.random()*100),
+          color: "#006db3",
+          title : "March"
+      },
+      {
+          value : Math.round(Math.random()*100),
+          color: "#005e95",
+          title : "April",
+          expandInRadius : -0.2
+      },
+      {
+          value : Math.round(Math.random()*100),
+          color: "#004b74",
+          title : "May"
+      },
+      {
+          value : Math.round(Math.random()*100),
+          color: "#003553",
+          title : "June",
+          expandOutRadius : 0.3
+      }
+    ];
+  },
 
+
+  actions:{
+    addComponent(){
+      this.dashboard.addComponent(this.getRandomComponent());
+    },
+
+    clearDashboard(){
+      this.dashboard.clear();
+    }
+  }
 });
