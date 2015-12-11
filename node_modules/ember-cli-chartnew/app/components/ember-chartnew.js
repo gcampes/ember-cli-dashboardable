@@ -1,0 +1,1 @@
+export { default } from 'ember-cli-chartnew/components/ember-chartnew';
