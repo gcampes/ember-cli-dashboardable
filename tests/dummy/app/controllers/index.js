@@ -4,14 +4,32 @@ export default Ember.Controller.extend({
   init(){
     for(let i = 10; i > 0 ; i--){
       setTimeout(() => {
-        this.dashboard.addComponent(this.getRandomComponent());
-      }, 250 * i);
+        this.dashboard.addComponent(this.getComponent());
+      }, i);
     }
   },
 
-  getRandomComponent(){
-    let random = Math.random();
-    if(random < 0.25){
+  getComponent(opt){
+    if(!opt){
+      let optSelector = Math.random();
+
+      if(optSelector <= 0.25){
+        opt = 'bar';
+      }
+      else if(optSelector <= 0.50){
+        opt = 'horizontal-bar';
+      }
+
+      else if(optSelector <= 0.75){
+        opt = 'pie';
+      }
+
+      else{
+        opt = 'doughnut';
+      }
+    }
+
+    if(opt === 'bar'){
       return {
         'name': 'dashboardable-chart',
         'options': {
@@ -23,7 +41,7 @@ export default Ember.Controller.extend({
         }
       };
     }
-    else if(random < 0.50){
+    else if(opt === 'horizontal-bar'){
       return {
         'name': 'dashboardable-chart',
         'options': {
@@ -35,7 +53,7 @@ export default Ember.Controller.extend({
         }
       };
     }
-    else if(random < 0.75){
+    else if(opt === 'pie'){
       return {
         'name': 'dashboardable-chart',
         'options': {
@@ -47,7 +65,7 @@ export default Ember.Controller.extend({
         }
       };
     }
-    else {
+    else if(opt === 'doughnut'){
       return {
         'name': 'dashboardable-chart',
         'options': {
@@ -59,6 +77,7 @@ export default Ember.Controller.extend({
         }
       };
     }
+    return null;
   },
 
   randomBarChartData(){
@@ -166,8 +185,8 @@ export default Ember.Controller.extend({
 
 
   actions:{
-    addComponent(){
-      this.dashboard.addComponent(this.getRandomComponent());
+    addComponent(opt){
+      this.dashboard.addComponent(this.getComponent(opt));
     },
 
     clearDashboard(){
@@ -176,6 +195,22 @@ export default Ember.Controller.extend({
 
     removeCard(item){
       this.dashboard.removeComponent(item);
-    }
+    },
+
+    addBarChart(){
+      this.addComponent('bar');
+    },
+
+    addHorizontalBarChart(){
+      this.addComponent('horizontal-bar');
+    },
+
+    addPieChart(){
+      this.addComponent('pie');
+    },
+
+    addDoughnutChart(){
+      this.addComponent('doughnut');
+    },
   }
 });

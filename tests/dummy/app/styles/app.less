@@ -17,7 +17,7 @@ h1{
   background-color: #212121;
   background-image: url('/assets/images/noise.png');
   width: 225px;
-  border-right: 10px solid rgb(17, 184, 255);
+  border-right: 10px solid #B9B9B9;
   height: 100%;
   position: absolute;
   .side-menu-header{
@@ -60,9 +60,9 @@ h1{
       }
 
       &.active{
-        border-right: 5px solid rgb(17, 184, 255);
+        border-right: 5px solid #B9B9B9;
         &:hover{
-          border-right: 8px solid rgb(17, 184, 255);
+          border-right: 8px solid #B9B9B9;
           background-position-x: -3px;
         }
       }
@@ -80,7 +80,7 @@ h1{
         background-color: #171717;
         color: #cfcfcf;
         text-indent: 8px;
-        border-right: 5px solid rgb(17, 184, 255);
+        border-right: 5px solid #B9B9B9;
       }
     }
   }
@@ -93,7 +93,7 @@ h1{
 .dashboardable-dashboard-container{
   @media (max-width: 560px){
     margin-left: 0px;
-    border-left: 5px solid rgb(17, 184, 255);
+    border-left: 5px solid #B9B9B9;
     width: 100%;
   };
 
@@ -111,26 +111,19 @@ h1{
   background-image: url('/assets/images/black-noise.png');
   display: inline-block;
 
-  @media (max-width:1279px){
-    width: 45%;
-    margin: 2.5%;
+  @media (max-width:1229px){
+    width: calc(~'(100% - 80px) / 2');
   };
-  @media (max-width:960px){
-    width: 90%;
-    margin: 5%;
+  @media (max-width:949px){
+    width: calc(~'100% - 40px');
   };
 
-  width: 30%;
-  margin: 1.60%;
+  width: calc(~'(100% - 120px) / 3');
+  margin: 10px 20px;
   background-color: #ffffff;
   border-bottom: 5px solid #D2D2D2;
 
   box-shadow: 0 3px 1px -2px rgba(0,0,0,.14),0 2px 2px 0 rgba(0,0,0,.098),0 1px 5px 0 rgba(0,0,0,.084);
-
-  &:hover{
-    border-bottom: 5px solid #b5b5b5;
-    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.28),0 2px 2px 0 rgba(0, 0, 0, 0.13),0 1px 5px 0 rgba(0, 0, 0, 0.13);
-  }
 
   h4{
     font-size: 18px;
@@ -168,7 +161,104 @@ h1{
     }
   }
 
+  &.full-width{
+    width: calc(~'100% - 40px');
+  }
+
+  .buttons{
+    margin: 8px;
+    button{
+      position: relative;
+      margin: 2px;
+      background-color: #949494;
+      color: #ffffff;
+      border:none;
+      font: inherit;
+      cursor: pointer;
+      border-bottom: 5px solid #828282;
+      border-radius: 2px;
+
+      &.btn-add-random{
+        background-color: #008eb4;
+        border-bottom: 5px solid #007b9c;
+        &:before{
+          font-family: "FontAwesome";
+          content: "\f074";
+          margin-right: 3px;
+        }
+
+        &:hover{
+          border-bottom: 4px solid #007b9c;
+        }
+      }
+
+      &.btn-add{
+        background-color: #0ab400;
+        border-bottom: 5px solid #0b9902;
+        &:before{
+          font-family: "FontAwesome";
+          content: "\f067";
+          margin-right: 3px;
+        }
+
+        &:hover{
+          border-bottom: 4px solid #0b9902;
+        }
+      }
+
+      &.btn-clear{
+        background-color: #fe0404;
+        border-bottom: 5px solid #cc0000;
+        &:before{
+          font-family: "FontAwesome";
+          content: "\f05e";
+          margin-right: 3px;
+        }
+
+        &:hover{
+          border-bottom: 4px solid #cc0000;
+        }
+      }
+
+      &:hover{
+        border-bottom: 4px solid #828282;
+        top: 1px;
+      }
+    }
+  }
+
   .ember-chartnew{
     margin: 15px;
+  }
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 44px;
+  left: 29px;
+  border-radius: 2px;
+  background-color: #F3F3F4;
+  border: none;
+  // border-bottom: 5px solid #B9B9B9;
+  box-shadow: 0 3px 1px -2px rgba(0,0,0,.14),0 2px 2px 0 rgba(0,0,0,.098),0 1px 5px 0 rgba(0,0,0,.084);
+  padding: 0;
+  li{
+    div{
+      i{
+        margin-right: 5px;
+      }
+
+      cursor: pointer;
+      padding-left: 5px;
+      margin: 2px;
+      border-radius: 2px;
+      background-color: #dadada;
+      border-bottom: 2px solid #cccccc;
+      transition: all 0.5s;
+      &:hover{
+        background-color: #B9B9B9;
+        border-bottom: 2px solid #939393;
+      }
+    }
   }
 }

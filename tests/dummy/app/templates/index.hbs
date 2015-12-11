@@ -1,12 +1,21 @@
-<h5>these buttons' purpose is to demonstrate the modularity of the dashboard, they would not exist on the real application</h5>
-<div class="buttons">
-  <button type="button" name="button" {{action 'addComponent'}}>Add</button>
-  <button type="button" name="button" {{action 'clearDashboard'}}>Clear</button>
-</div>
+{{#dashboardable-card classesToAdd='full-width'}}
+  <div class="buttons">
+    <button class="btn-add dropdown-toggle" data-toggle="dropdown" type="button" name="button">Add<span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <li><div {{action 'addComponent' 'bar'}}><i class="fa fa-bar-chart"></i>Bar Chart</div></li>
+      <li><div {{action 'addComponent' 'horizontal-bar'}}><i class="fa fa-bar-chart"></i>Horizontal Bar Chart</div></li>
+      <li><div {{action 'addComponent' 'pie'}}><i class="fa fa-pie-chart"></i>Pie Chart</div></li>
+      <li><div {{action 'addComponent' 'doughnut'}}><i class="fa fa-pie-chart"></i>Doughnut Chart</div></li>
+    </ul>
+
+    <button class="btn-add-random" type="button" name="button" {{action 'addComponent'}}>Add Random</button>
+    <button class="btn-clear" type="button" name="button" {{action 'clearDashboard'}}>Clear</button>
+  </div>
+{{/dashboardable-card}}
 
 
 {{#each dashboard.components as |item|}}
-  {{#dashboardable-card classesToAdd=item.options.classesToAdd}}
+  {{#dashboardable-card class=item.options.classesToAdd}}
     <h4 class="{{item.options.icon}}-chart">Lorem Ipsum<i class="fa fa-times" {{action 'removeCard' item}}></i></h4>
     {{component item.name options=item.options}}
   {{/dashboardable-card}}
