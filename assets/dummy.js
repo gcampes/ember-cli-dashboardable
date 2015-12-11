@@ -63,14 +63,27 @@ define('dummy/controllers/index', ['exports', 'ember'], function (exports, _embe
 
       for (var i = 10; i > 0; i--) {
         setTimeout(function () {
-          _this.dashboard.addComponent(_this.getRandomComponent());
-        }, 250 * i);
+          _this.dashboard.addComponent(_this.getComponent());
+        }, i);
       }
     },
 
-    getRandomComponent: function getRandomComponent() {
-      var random = Math.random();
-      if (random < 0.25) {
+    getComponent: function getComponent(opt) {
+      if (!opt) {
+        var optSelector = Math.random();
+
+        if (optSelector <= 0.25) {
+          opt = 'bar';
+        } else if (optSelector <= 0.50) {
+          opt = 'horizontal-bar';
+        } else if (optSelector <= 0.75) {
+          opt = 'pie';
+        } else {
+          opt = 'doughnut';
+        }
+      }
+
+      if (opt === 'bar') {
         return {
           'name': 'dashboardable-chart',
           'options': {
@@ -81,7 +94,7 @@ define('dummy/controllers/index', ['exports', 'ember'], function (exports, _embe
             'options': this.get('chartOptions')
           }
         };
-      } else if (random < 0.50) {
+      } else if (opt === 'horizontal-bar') {
         return {
           'name': 'dashboardable-chart',
           'options': {
@@ -92,7 +105,7 @@ define('dummy/controllers/index', ['exports', 'ember'], function (exports, _embe
             'options': this.get('chartOptions')
           }
         };
-      } else if (random < 0.75) {
+      } else if (opt === 'pie') {
         return {
           'name': 'dashboardable-chart',
           'options': {
@@ -103,7 +116,7 @@ define('dummy/controllers/index', ['exports', 'ember'], function (exports, _embe
             'options': this.get('chartOptions')
           }
         };
-      } else {
+      } else if (opt === 'doughnut') {
         return {
           'name': 'dashboardable-chart',
           'options': {
@@ -115,6 +128,7 @@ define('dummy/controllers/index', ['exports', 'ember'], function (exports, _embe
           }
         };
       }
+      return null;
     },
 
     randomBarChartData: function randomBarChartData() {
@@ -205,12 +219,32 @@ define('dummy/controllers/index', ['exports', 'ember'], function (exports, _embe
     },
 
     actions: {
-      addComponent: function addComponent() {
-        this.dashboard.addComponent(this.getRandomComponent());
+      addComponent: function addComponent(opt) {
+        this.dashboard.addComponent(this.getComponent(opt));
       },
 
       clearDashboard: function clearDashboard() {
         this.dashboard.clear();
+      },
+
+      removeCard: function removeCard(item) {
+        this.dashboard.removeComponent(item);
+      },
+
+      addBarChart: function addBarChart() {
+        this.addComponent('bar');
+      },
+
+      addHorizontalBarChart: function addHorizontalBarChart() {
+        this.addComponent('horizontal-bar');
+      },
+
+      addPieChart: function addPieChart() {
+        this.addComponent('pie');
+      },
+
+      addDoughnutChart: function addDoughnutChart() {
+        this.addComponent('doughnut');
       }
     }
   });
@@ -734,6 +768,144 @@ define("dummy/templates/components/ember-chartnew", ["exports"], function (expor
 define("dummy/templates/index", ["exports"], function (exports) {
   exports["default"] = Ember.HTMLBars.template((function () {
     var child0 = (function () {
+      return {
+        meta: {
+          "revision": "Ember@1.13.11",
+          "loc": {
+            "source": null,
+            "start": {
+              "line": 1,
+              "column": 0
+            },
+            "end": {
+              "line": 14,
+              "column": 0
+            }
+          },
+          "moduleName": "dummy/templates/index.hbs"
+        },
+        arity: 0,
+        cachedFragment: null,
+        hasRendered: false,
+        buildFragment: function buildFragment(dom) {
+          var el0 = dom.createDocumentFragment();
+          var el1 = dom.createTextNode("  ");
+          dom.appendChild(el0, el1);
+          var el1 = dom.createElement("div");
+          dom.setAttribute(el1, "class", "buttons");
+          var el2 = dom.createTextNode("\n    ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("button");
+          dom.setAttribute(el2, "class", "btn-add dropdown-toggle");
+          dom.setAttribute(el2, "data-toggle", "dropdown");
+          dom.setAttribute(el2, "type", "button");
+          dom.setAttribute(el2, "name", "button");
+          var el3 = dom.createTextNode("Add");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createElement("span");
+          dom.setAttribute(el3, "class", "caret");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n    ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("ul");
+          dom.setAttribute(el2, "class", "dropdown-menu");
+          var el3 = dom.createTextNode("\n      ");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createElement("li");
+          var el4 = dom.createElement("div");
+          var el5 = dom.createElement("i");
+          dom.setAttribute(el5, "class", "fa fa-bar-chart");
+          dom.appendChild(el4, el5);
+          var el5 = dom.createTextNode("Bar Chart");
+          dom.appendChild(el4, el5);
+          dom.appendChild(el3, el4);
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("\n      ");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createElement("li");
+          var el4 = dom.createElement("div");
+          var el5 = dom.createElement("i");
+          dom.setAttribute(el5, "class", "fa fa-bar-chart");
+          dom.appendChild(el4, el5);
+          var el5 = dom.createTextNode("Horizontal Bar Chart");
+          dom.appendChild(el4, el5);
+          dom.appendChild(el3, el4);
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("\n      ");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createElement("li");
+          var el4 = dom.createElement("div");
+          var el5 = dom.createElement("i");
+          dom.setAttribute(el5, "class", "fa fa-pie-chart");
+          dom.appendChild(el4, el5);
+          var el5 = dom.createTextNode("Pie Chart");
+          dom.appendChild(el4, el5);
+          dom.appendChild(el3, el4);
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("\n      ");
+          dom.appendChild(el2, el3);
+          var el3 = dom.createElement("li");
+          var el4 = dom.createElement("div");
+          var el5 = dom.createElement("i");
+          dom.setAttribute(el5, "class", "fa fa-pie-chart");
+          dom.appendChild(el4, el5);
+          var el5 = dom.createTextNode("Doughnut Chart");
+          dom.appendChild(el4, el5);
+          dom.appendChild(el3, el4);
+          dom.appendChild(el2, el3);
+          var el3 = dom.createTextNode("\n    ");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n\n    ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("button");
+          dom.setAttribute(el2, "class", "btn-add-random");
+          dom.setAttribute(el2, "type", "button");
+          dom.setAttribute(el2, "name", "button");
+          var el3 = dom.createTextNode("Add Random");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n    ");
+          dom.appendChild(el1, el2);
+          var el2 = dom.createElement("button");
+          dom.setAttribute(el2, "class", "btn-clear");
+          dom.setAttribute(el2, "type", "button");
+          dom.setAttribute(el2, "name", "button");
+          var el3 = dom.createTextNode("Clear");
+          dom.appendChild(el2, el3);
+          dom.appendChild(el1, el2);
+          var el2 = dom.createTextNode("\n  ");
+          dom.appendChild(el1, el2);
+          dom.appendChild(el0, el1);
+          var el1 = dom.createTextNode("\n");
+          dom.appendChild(el0, el1);
+          return el0;
+        },
+        buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
+          var element2 = dom.childAt(fragment, [1]);
+          var element3 = dom.childAt(element2, [3]);
+          var element4 = dom.childAt(element3, [1, 0]);
+          var element5 = dom.childAt(element3, [3, 0]);
+          var element6 = dom.childAt(element3, [5, 0]);
+          var element7 = dom.childAt(element3, [7, 0]);
+          var element8 = dom.childAt(element2, [5]);
+          var element9 = dom.childAt(element2, [7]);
+          var morphs = new Array(6);
+          morphs[0] = dom.createElementMorph(element4);
+          morphs[1] = dom.createElementMorph(element5);
+          morphs[2] = dom.createElementMorph(element6);
+          morphs[3] = dom.createElementMorph(element7);
+          morphs[4] = dom.createElementMorph(element8);
+          morphs[5] = dom.createElementMorph(element9);
+          return morphs;
+        },
+        statements: [["element", "action", ["addComponent", "bar"], [], ["loc", [null, [5, 15], [5, 46]]]], ["element", "action", ["addComponent", "horizontal-bar"], [], ["loc", [null, [6, 15], [6, 57]]]], ["element", "action", ["addComponent", "pie"], [], ["loc", [null, [7, 15], [7, 46]]]], ["element", "action", ["addComponent", "doughnut"], [], ["loc", [null, [8, 15], [8, 51]]]], ["element", "action", ["addComponent"], [], ["loc", [null, [11, 63], [11, 88]]]], ["element", "action", ["clearDashboard"], [], ["loc", [null, [12, 58], [12, 85]]]]],
+        locals: [],
+        templates: []
+      };
+    })();
+    var child1 = (function () {
       var child0 = (function () {
         return {
           meta: {
@@ -741,11 +913,11 @@ define("dummy/templates/index", ["exports"], function (exports) {
             "loc": {
               "source": null,
               "start": {
-                "line": 9,
+                "line": 18,
                 "column": 2
               },
               "end": {
-                "line": 12,
+                "line": 21,
                 "column": 2
               }
             },
@@ -761,6 +933,9 @@ define("dummy/templates/index", ["exports"], function (exports) {
             var el1 = dom.createElement("h4");
             var el2 = dom.createTextNode("Lorem Ipsum");
             dom.appendChild(el1, el2);
+            var el2 = dom.createElement("i");
+            dom.setAttribute(el2, "class", "fa fa-times");
+            dom.appendChild(el1, el2);
             dom.appendChild(el0, el1);
             var el1 = dom.createTextNode("\n    ");
             dom.appendChild(el0, el1);
@@ -772,12 +947,14 @@ define("dummy/templates/index", ["exports"], function (exports) {
           },
           buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
             var element0 = dom.childAt(fragment, [1]);
-            var morphs = new Array(2);
+            var element1 = dom.childAt(element0, [1]);
+            var morphs = new Array(3);
             morphs[0] = dom.createAttrMorph(element0, 'class');
-            morphs[1] = dom.createMorphAt(fragment, 3, 3, contextualElement);
+            morphs[1] = dom.createElementMorph(element1);
+            morphs[2] = dom.createMorphAt(fragment, 3, 3, contextualElement);
             return morphs;
           },
-          statements: [["attribute", "class", ["concat", [["get", "item.options.icon", ["loc", [null, [10, 17], [10, 34]]]], "-chart"]]], ["inline", "component", [["get", "item.name", ["loc", [null, [11, 16], [11, 25]]]]], ["options", ["subexpr", "@mut", [["get", "item.options", ["loc", [null, [11, 34], [11, 46]]]]], [], []]], ["loc", [null, [11, 4], [11, 48]]]]],
+          statements: [["attribute", "class", ["concat", [["get", "item.options.icon", ["loc", [null, [19, 17], [19, 34]]]], "-chart"]]], ["element", "action", ["removeCard", ["get", "item", ["loc", [null, [19, 100], [19, 104]]]]], [], ["loc", [null, [19, 78], [19, 106]]]], ["inline", "component", [["get", "item.name", ["loc", [null, [20, 16], [20, 25]]]]], ["options", ["subexpr", "@mut", [["get", "item.options", ["loc", [null, [20, 34], [20, 46]]]]], [], []]], ["loc", [null, [20, 4], [20, 48]]]]],
           locals: [],
           templates: []
         };
@@ -788,11 +965,11 @@ define("dummy/templates/index", ["exports"], function (exports) {
           "loc": {
             "source": null,
             "start": {
-              "line": 8,
+              "line": 17,
               "column": 0
             },
             "end": {
-              "line": 13,
+              "line": 22,
               "column": 0
             }
           },
@@ -814,7 +991,7 @@ define("dummy/templates/index", ["exports"], function (exports) {
           dom.insertBoundary(fragment, null);
           return morphs;
         },
-        statements: [["block", "dashboardable-card", [], ["classesToAdd", ["subexpr", "@mut", [["get", "item.options.classesToAdd", ["loc", [null, [9, 37], [9, 62]]]]], [], []]], 0, null, ["loc", [null, [9, 2], [12, 25]]]]],
+        statements: [["block", "dashboardable-card", [], ["class", ["subexpr", "@mut", [["get", "item.options.classesToAdd", ["loc", [null, [18, 30], [18, 55]]]]], [], []]], 0, null, ["loc", [null, [18, 2], [21, 25]]]]],
         locals: ["item"],
         templates: [child0]
       };
@@ -829,7 +1006,7 @@ define("dummy/templates/index", ["exports"], function (exports) {
             "column": 0
           },
           "end": {
-            "line": 14,
+            "line": 23,
             "column": 0
           }
         },
@@ -840,53 +1017,25 @@ define("dummy/templates/index", ["exports"], function (exports) {
       hasRendered: false,
       buildFragment: function buildFragment(dom) {
         var el0 = dom.createDocumentFragment();
-        var el1 = dom.createElement("h5");
-        var el2 = dom.createTextNode("these buttons' purpose is to demonstrate the modularity of the dashboard, they would not exist on the real application");
-        dom.appendChild(el1, el2);
+        var el1 = dom.createComment("");
         dom.appendChild(el0, el1);
-        var el1 = dom.createTextNode("\n");
-        dom.appendChild(el0, el1);
-        var el1 = dom.createElement("div");
-        dom.setAttribute(el1, "class", "buttons");
-        var el2 = dom.createTextNode("\n  ");
-        dom.appendChild(el1, el2);
-        var el2 = dom.createElement("button");
-        dom.setAttribute(el2, "type", "button");
-        dom.setAttribute(el2, "name", "button");
-        var el3 = dom.createTextNode("Add");
-        dom.appendChild(el2, el3);
-        dom.appendChild(el1, el2);
-        var el2 = dom.createTextNode("\n  ");
-        dom.appendChild(el1, el2);
-        var el2 = dom.createElement("button");
-        dom.setAttribute(el2, "type", "button");
-        dom.setAttribute(el2, "name", "button");
-        var el3 = dom.createTextNode("Clear");
-        dom.appendChild(el2, el3);
-        dom.appendChild(el1, el2);
-        var el2 = dom.createTextNode("\n");
-        dom.appendChild(el1, el2);
-        dom.appendChild(el0, el1);
-        var el1 = dom.createTextNode("\n\n\n");
+        var el1 = dom.createTextNode("\n\n");
         dom.appendChild(el0, el1);
         var el1 = dom.createComment("");
         dom.appendChild(el0, el1);
         return el0;
       },
       buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-        var element1 = dom.childAt(fragment, [2]);
-        var element2 = dom.childAt(element1, [1]);
-        var element3 = dom.childAt(element1, [3]);
-        var morphs = new Array(3);
-        morphs[0] = dom.createElementMorph(element2);
-        morphs[1] = dom.createElementMorph(element3);
-        morphs[2] = dom.createMorphAt(fragment, 4, 4, contextualElement);
+        var morphs = new Array(2);
+        morphs[0] = dom.createMorphAt(fragment, 0, 0, contextualElement);
+        morphs[1] = dom.createMorphAt(fragment, 2, 2, contextualElement);
+        dom.insertBoundary(fragment, 0);
         dom.insertBoundary(fragment, null);
         return morphs;
       },
-      statements: [["element", "action", ["addComponent"], [], ["loc", [null, [3, 38], [3, 63]]]], ["element", "action", ["clearDashboard"], [], ["loc", [null, [4, 38], [4, 65]]]], ["block", "each", [["get", "dashboard.components", ["loc", [null, [8, 8], [8, 28]]]]], [], 0, null, ["loc", [null, [8, 0], [13, 9]]]]],
+      statements: [["block", "dashboardable-card", [], ["classesToAdd", "full-width"], 0, null, ["loc", [null, [1, 0], [14, 23]]]], ["block", "each", [["get", "dashboard.components", ["loc", [null, [17, 8], [17, 28]]]]], [], 1, null, ["loc", [null, [17, 0], [22, 9]]]]],
       locals: [],
-      templates: [child0]
+      templates: [child0, child1]
     };
   })());
 });
@@ -916,7 +1065,7 @@ catch(err) {
 });
 
 if (!runningTests) {
-  require("dummy/app")["default"].create({"name":"ember-cli-dashboardable","version":"0.0.0+78a35b2f"});
+  require("dummy/app")["default"].create({"name":"ember-cli-dashboardable","version":"0.0.0+e822a62f"});
 }
 
 /* jshint ignore:end */
