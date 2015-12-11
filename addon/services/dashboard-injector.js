@@ -27,6 +27,16 @@ export default Ember.Service.extend({
     this.set('sortProperties', sortProperties);
   },
 
+  removeComponent(component){
+    this.get('rawComponents').removeObject(component);
+  },
+
+  removeComponents(componentList){
+    componentList.forEach((component) => {
+      this.get('rawComponents').removeObject(component);
+    });
+  },
+
   clear(){
     this.set('rawComponents', new A([]));
   }

@@ -172,6 +172,10 @@ export default Ember.Controller.extend({
 
     clearDashboard(){
       this.dashboard.clear();
+    },
+
+    removeCard(item){
+      this.dashboard.removeComponent(item);
     }
   }
 });
