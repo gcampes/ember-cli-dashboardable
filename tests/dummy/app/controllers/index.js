@@ -50,7 +50,7 @@ export default Ember.Controller.extend({
             }
           },
           'icon': 'bar',
-          'classesToAdd': 'card-default',
+          'classesToAdd': 'card-default double-width',
           'data': this.randomHorizontalBarChartData()
         }
       };

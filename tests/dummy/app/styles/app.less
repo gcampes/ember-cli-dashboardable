@@ -161,6 +161,9 @@ h1{
   }
 
   &.double-width{
+    @media (max-width:1229px){
+      width: calc(~'(100% - 40px)');
+    };
     width: calc(~'(100% - 60px) / 3 * 2');
   }
 
