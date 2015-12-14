@@ -34,10 +34,8 @@ export default Ember.Controller.extend({
         'name': 'dashboardable-chart',
         'options': {
           'icon': 'bar',
-          'type': 'bar',
-          'classesToAdd': 'custom-class-bar',
-          'data': this.randomBarChartData(),
-          'options': this.get('chartOptions')
+          'classesToAdd': 'card-default',
+          'data': this.randomBarChartData()
         }
       };
     }
@@ -45,11 +43,15 @@ export default Ember.Controller.extend({
       return {
         'name': 'dashboardable-chart',
         'options': {
+          'axis': {
+            rotated: true,         // horizontal bar chart
+            x: {
+                type: 'category'   // this needed to load string x value
+            }
+          },
           'icon': 'bar',
-          'type': 'horizontal-bar',
-          'classesToAdd': 'custom-class-horizontal-bar',
-          'data': this.randomBarChartData(),
-          'options': this.get('chartOptions')
+          'classesToAdd': 'card-default',
+          'data': this.randomHorizontalBarChartData()
         }
       };
     }
@@ -58,10 +60,8 @@ export default Ember.Controller.extend({
         'name': 'dashboardable-chart',
         'options': {
           'icon': 'pie',
-          'type': 'pie',
-          'classesToAdd': 'custom-class-pie',
-          'data': this.randomPieChartData(),
-          'options': this.get('chartOptions')
+          'classesToAdd': 'card-default',
+          'data': this.randomPieChartData()
         }
       };
     }
@@ -70,117 +70,88 @@ export default Ember.Controller.extend({
         'name': 'dashboardable-chart',
         'options': {
           'icon': 'pie',
-          'type': 'doughnut',
-          'classesToAdd': 'custom-class-doughnut',
-          'data': this.randomDoughnutChartData(),
-          'options': this.get('chartOptions')
+          'classesToAdd': 'card-default',
+          'data': this.randomDoughnutChartData()
         }
       };
+    }
+    else if(opt === 'information'){
+      return {
+        'name': 'information-card',
+        'options': {
+          'text': 'Lorem ipsum'
+        }
+      }
     }
     return null;
   },
 
   randomBarChartData(){
     return {
-      labels: ["Open", "In Progress", "Closed"],
-      datasets: [
-        {
-          fillColor: "rgb(0, 109, 179)",
-          data: [Math.round(Math.random()*100), Math.round(Math.random()*100), Math.round(Math.random()*100)],
-          title: "2015"
-        }
-      ]
+      colors:{
+        "Lorem" : "#024c81",
+        "Dolor": "#0373c4",
+        "Ipsum": "#46b1ff"
+      },
+      columns: [
+        ['Lorem', Math.round(Math.random()*100)],
+        ['Ipsum', Math.round(Math.random()*100)],
+        ['Dolor', Math.round(Math.random()*100)],
+      ],
+      type: 'bar'
     };
   },
 
-  chartOptions: {
-    yAxisMinimumInterval: 1,
-    animationSteps: 80,
-    responsive: true,
-    inGraphDataShow: true,
-    annotateDisplay: true,
-    graphTitleFontSize: 18,
-    barShowStroke: false,
-    segmentShowStroke: false,
-    inGraphDataFontColor : "rgb(65, 64, 64)",
-    inGraphDataFontSize: 10,
-    scaleGridLineColor: "rgba(0, 0, 0, 0.1)",
-    graphTitleFontColor: "rgb(93, 92, 92)",
-    scaleFontColor: "rgb(29, 29, 29)"
+  randomHorizontalBarChartData(){
+    return {
+      json: [{
+          "label": "Lorem",
+          "count": Math.round(Math.random()*100)
+      }, {
+          "label": "Dolor",
+          "count": Math.round(Math.random()*100)
+      }, {
+          "label": "Ipsum",
+          "count": Math.round(Math.random()*100),
+      }],            // specify that our above json is the data
+      keys: {
+        x: 'label',         // specify that the "name" key is the x value
+        value: ["count"]     // specify that the "age" key is the y value
+      },
+      type: 'bar'
+    };
   },
 
   randomPieChartData(){
-    return [
-      {
-          value : Math.round(Math.random()*100),
-          color: "#00a5ff",
-          title : "January"
-      },
-      {
-          value : Math.round(Math.random()*100),
-          color: "#008cda",
-          title : "February"
-      },
-      {
-          value : Math.round(Math.random()*100),
-          color: "#006db3",
-          title : "March"
-      },
-      {
-          value : Math.round(Math.random()*100),
-          color: "#005e95",
-          title : "April"
-      },
-      {
-          value : Math.round(Math.random()*100),
-          color: "#004b74",
-          title : "May"
-      },
-      {
-          value : Math.round(Math.random()*100),
-          color: "#003553",
-          title : "June"
-      }
-    ];
+    return {
+        colors:{
+          "Lorem" : "#005796",
+          "Dolor": "#027ad2",
+          "Ipsum": "#46b1ff"
+        },
+        columns: [
+          ["Lorem", Math.round(Math.random()*100)],
+          ["Ipsum", Math.round(Math.random()*100)],
+          ["Dolor", Math.round(Math.random()*100)],
+        ],
+        type : 'pie'
+    }
   },
 
   randomDoughnutChartData(){
-    return [
-      {
-          value : Math.round(Math.random()*100),
-          color: "#00a5ff",
-          title : "January"
+    return {
+      colors:{
+        "Lorem" : "#005796",
+        "Dolor": "#027ad2",
+        "Ipsum": "#46b1ff"
       },
-      {
-          value : Math.round(Math.random()*100),
-          color: "#008cda",
-          title : "February",
-          expandInRadius : 0.2,
-          expandOutRadius : 0.2
-      },
-      {
-          value : Math.round(Math.random()*100),
-          color: "#006db3",
-          title : "March"
-      },
-      {
-          value : Math.round(Math.random()*100),
-          color: "#005e95",
-          title : "April",
-          expandInRadius : -0.2
-      },
-      {
-          value : Math.round(Math.random()*100),
-          color: "#004b74",
-          title : "May"
-      },
-      {
-          value : Math.round(Math.random()*100),
-          color: "#003553",
-          title : "June",
-          expandOutRadius : 0.3
-      }
-    ];
+      columns: [
+        ["Lorem", Math.round(Math.random()*100)],
+        ["Ipsum", Math.round(Math.random()*100)],
+        ["Dolor", Math.round(Math.random()*100)],
+      ],
+      type : 'donut'
+    }
   },
 
 
