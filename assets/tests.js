@@ -13,7 +13,7 @@ define('dummy/tests/controllers/index.jshint', ['exports'], function (exports) {
   QUnit.module('JSHint - controllers');
   QUnit.test('controllers/index.js should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'controllers/index.js should pass jshint.');
+    assert.ok(false, 'controllers/index.js should pass jshint.\ncontrollers/index.js: line 84, col 8, Missing semicolon.\ncontrollers/index.js: line 138, col 6, Missing semicolon.\ncontrollers/index.js: line 154, col 6, Missing semicolon.\n\n3 errors');
   });
 });
 define('dummy/tests/helpers/destroy-app', ['exports', 'ember'], function (exports, _ember) {

@@ -29,6 +29,14 @@ define('dummy/components/app-version', ['exports', 'ember-cli-app-version/compon
     name: name
   });
 });
+define('dummy/components/c3-chart', ['exports', 'ember-c3/components/c3-chart'], function (exports, _emberC3ComponentsC3Chart) {
+  Object.defineProperty(exports, 'default', {
+    enumerable: true,
+    get: function get() {
+      return _emberC3ComponentsC3Chart['default'];
+    }
+  });
+});
 define('dummy/components/dashboardable-card', ['exports', 'ember-cli-dashboardable/components/dashboardable-card'], function (exports, _emberCliDashboardableComponentsDashboardableCard) {
   Object.defineProperty(exports, 'default', {
     enumerable: true,
@@ -42,14 +50,6 @@ define('dummy/components/dashboardable-chart', ['exports', 'ember-cli-dashboarda
     enumerable: true,
     get: function get() {
       return _emberCliDashboardableComponentsDashboardableChart['default'];
-    }
-  });
-});
-define('dummy/components/ember-chartnew', ['exports', 'ember-cli-chartnew/components/ember-chartnew'], function (exports, _emberCliChartnewComponentsEmberChartnew) {
-  Object.defineProperty(exports, 'default', {
-    enumerable: true,
-    get: function get() {
-      return _emberCliChartnewComponentsEmberChartnew['default'];
     }
   });
 });
@@ -88,21 +88,23 @@ define('dummy/controllers/index', ['exports', 'ember'], function (exports, _embe
           'name': 'dashboardable-chart',
           'options': {
             'icon': 'bar',
-            'type': 'bar',
-            'classesToAdd': 'custom-class-bar',
-            'data': this.randomBarChartData(),
-            'options': this.get('chartOptions')
+            'classesToAdd': 'card-default',
+            'data': this.randomBarChartData()
           }
         };
       } else if (opt === 'horizontal-bar') {
         return {
           'name': 'dashboardable-chart',
           'options': {
+            'axis': {
+              rotated: true, // horizontal bar chart
+              x: {
+                type: 'category' // this needed to load string x value
+              }
+            },
             'icon': 'bar',
-            'type': 'horizontal-bar',
-            'classesToAdd': 'custom-class-horizontal-bar',
-            'data': this.randomBarChartData(),
-            'options': this.get('chartOptions')
+            'classesToAdd': 'card-default',
+            'data': this.randomHorizontalBarChartData()
           }
         };
       } else if (opt === 'pie') {
@@ -110,10 +112,8 @@ define('dummy/controllers/index', ['exports', 'ember'], function (exports, _embe
           'name': 'dashboardable-chart',
           'options': {
             'icon': 'pie',
-            'type': 'pie',
-            'classesToAdd': 'custom-class-pie',
-            'data': this.randomPieChartData(),
-            'options': this.get('chartOptions')
+            'classesToAdd': 'card-default',
+            'data': this.randomPieChartData()
           }
         };
       } else if (opt === 'doughnut') {
@@ -121,10 +121,15 @@ define('dummy/controllers/index', ['exports', 'ember'], function (exports, _embe
           'name': 'dashboardable-chart',
           'options': {
             'icon': 'pie',
-            'type': 'doughnut',
-            'classesToAdd': 'custom-class-doughnut',
-            'data': this.randomDoughnutChartData(),
-            'options': this.get('chartOptions')
+            'classesToAdd': 'card-default',
+            'data': this.randomDoughnutChartData()
+          }
+        };
+      } else if (opt === 'information') {
+        return {
+          'name': 'information-card',
+          'options': {
+            'text': 'Lorem ipsum'
           }
         };
       }
@@ -133,89 +138,58 @@ define('dummy/controllers/index', ['exports', 'ember'], function (exports, _embe
 
     randomBarChartData: function randomBarChartData() {
       return {
-        labels: ["Open", "In Progress", "Closed"],
-        datasets: [{
-          fillColor: "rgb(0, 109, 179)",
-          data: [Math.round(Math.random() * 100), Math.round(Math.random() * 100), Math.round(Math.random() * 100)],
-          title: "2015"
-        }]
+        colors: {
+          "Lorem": "#024c81",
+          "Dolor": "#0373c4",
+          "Ipsum": "#46b1ff"
+        },
+        columns: [['Lorem', Math.round(Math.random() * 100)], ['Ipsum', Math.round(Math.random() * 100)], ['Dolor', Math.round(Math.random() * 100)]],
+        type: 'bar'
       };
     },
 
-    chartOptions: {
-      yAxisMinimumInterval: 1,
-      animationSteps: 80,
-      responsive: true,
-      inGraphDataShow: true,
-      annotateDisplay: true,
-      graphTitleFontSize: 18,
-      barShowStroke: false,
-      segmentShowStroke: false,
-      inGraphDataFontColor: "rgb(65, 64, 64)",
-      inGraphDataFontSize: 10,
-      scaleGridLineColor: "rgba(0, 0, 0, 0.1)",
-      graphTitleFontColor: "rgb(93, 92, 92)",
-      scaleFontColor: "rgb(29, 29, 29)"
+    randomHorizontalBarChartData: function randomHorizontalBarChartData() {
+      return {
+        json: [{
+          "label": "Lorem",
+          "count": Math.round(Math.random() * 100)
+        }, {
+          "label": "Dolor",
+          "count": Math.round(Math.random() * 100)
+        }, {
+          "label": "Ipsum",
+          "count": Math.round(Math.random() * 100)
+        }], // specify that our above json is the data
+        keys: {
+          x: 'label', // specify that the "name" key is the x value
+          value: ["count"] // specify that the "age" key is the y value
+        },
+        type: 'bar'
+      };
     },
 
     randomPieChartData: function randomPieChartData() {
-      return [{
-        value: Math.round(Math.random() * 100),
-        color: "#00a5ff",
-        title: "January"
-      }, {
-        value: Math.round(Math.random() * 100),
-        color: "#008cda",
-        title: "February"
-      }, {
-        value: Math.round(Math.random() * 100),
-        color: "#006db3",
-        title: "March"
-      }, {
-        value: Math.round(Math.random() * 100),
-        color: "#005e95",
-        title: "April"
-      }, {
-        value: Math.round(Math.random() * 100),
-        color: "#004b74",
-        title: "May"
-      }, {
-        value: Math.round(Math.random() * 100),
-        color: "#003553",
-        title: "June"
-      }];
+      return {
+        colors: {
+          "Lorem": "#005796",
+          "Dolor": "#027ad2",
+          "Ipsum": "#46b1ff"
+        },
+        columns: [["Lorem", Math.round(Math.random() * 100)], ["Ipsum", Math.round(Math.random() * 100)], ["Dolor", Math.round(Math.random() * 100)]],
+        type: 'pie'
+      };
     },
 
     randomDoughnutChartData: function randomDoughnutChartData() {
-      return [{
-        value: Math.round(Math.random() * 100),
-        color: "#00a5ff",
-        title: "January"
-      }, {
-        value: Math.round(Math.random() * 100),
-        color: "#008cda",
-        title: "February",
-        expandInRadius: 0.2,
-        expandOutRadius: 0.2
-      }, {
-        value: Math.round(Math.random() * 100),
-        color: "#006db3",
-        title: "March"
-      }, {
-        value: Math.round(Math.random() * 100),
-        color: "#005e95",
-        title: "April",
-        expandInRadius: -0.2
-      }, {
-        value: Math.round(Math.random() * 100),
-        color: "#004b74",
-        title: "May"
-      }, {
-        value: Math.round(Math.random() * 100),
-        color: "#003553",
-        title: "June",
-        expandOutRadius: 0.3
-      }];
+      return {
+        colors: {
+          "Lorem": "#005796",
+          "Dolor": "#027ad2",
+          "Ipsum": "#46b1ff"
+        },
+        columns: [["Lorem", Math.round(Math.random() * 100)], ["Ipsum", Math.round(Math.random() * 100)], ["Dolor", Math.round(Math.random() * 100)]],
+        type: 'donut'
+      };
     },
 
     actions: {
@@ -256,7 +230,7 @@ define('dummy/ember-cli-dashboardable/tests/modules/ember-cli-dashboardable/comp
   QUnit.module('JSHint - modules/ember-cli-dashboardable/components');
   QUnit.test('modules/ember-cli-dashboardable/components/dashboardable-card.js should pass jshint', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'modules/ember-cli-dashboardable/components/dashboardable-card.js should pass jshint.\nmodules/ember-cli-dashboardable/components/dashboardable-card.js: line 12, col 11, \'$\' is not defined.\n\n1 error');
+    assert.ok(true, 'modules/ember-cli-dashboardable/components/dashboardable-card.js should pass jshint.');
   });
 });
 define('dummy/ember-cli-dashboardable/tests/modules/ember-cli-dashboardable/components/dashboardable-chart.jshint', ['exports'], function (exports) {
@@ -560,206 +534,7 @@ define("dummy/templates/components/dashboardable-chart", ["exports"], function (
         dom.insertBoundary(fragment, 0);
         return morphs;
       },
-      statements: [["inline", "ember-chartnew", [], ["type", ["subexpr", "@mut", [["get", "options.type", ["loc", [null, [1, 22], [1, 34]]]]], [], []], "data", ["subexpr", "@mut", [["get", "options.data", ["loc", [null, [1, 40], [1, 52]]]]], [], []], "options", ["subexpr", "@mut", [["get", "options.options", ["loc", [null, [1, 61], [1, 76]]]]], [], []]], ["loc", [null, [1, 0], [1, 78]]]]],
-      locals: [],
-      templates: []
-    };
-  })());
-});
-define("dummy/templates/components/dashboardable-navbar", ["exports"], function (exports) {
-  exports["default"] = Ember.HTMLBars.template((function () {
-    return {
-      meta: {
-        "revision": "Ember@1.13.11",
-        "loc": {
-          "source": null,
-          "start": {
-            "line": 1,
-            "column": 0
-          },
-          "end": {
-            "line": 6,
-            "column": 0
-          }
-        },
-        "moduleName": "dummy/templates/components/dashboardable-navbar.hbs"
-      },
-      arity: 0,
-      cachedFragment: null,
-      hasRendered: false,
-      buildFragment: function buildFragment(dom) {
-        var el0 = dom.createDocumentFragment();
-        var el1 = dom.createElement("div");
-        dom.setAttribute(el1, "class", "dashboardable-navbar");
-        var el2 = dom.createTextNode("\n  ");
-        dom.appendChild(el1, el2);
-        var el2 = dom.createElement("div");
-        dom.setAttribute(el2, "class", "navbar-content");
-        var el3 = dom.createTextNode("\n    ");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createElement("h1");
-        dom.setAttribute(el3, "class", "title");
-        var el4 = dom.createTextNode("Header");
-        dom.appendChild(el3, el4);
-        dom.appendChild(el2, el3);
-        var el3 = dom.createTextNode("\n  ");
-        dom.appendChild(el2, el3);
-        dom.appendChild(el1, el2);
-        var el2 = dom.createTextNode("\n");
-        dom.appendChild(el1, el2);
-        dom.appendChild(el0, el1);
-        var el1 = dom.createTextNode("\n");
-        dom.appendChild(el0, el1);
-        return el0;
-      },
-      buildRenderNodes: function buildRenderNodes() {
-        return [];
-      },
-      statements: [],
-      locals: [],
-      templates: []
-    };
-  })());
-});
-define("dummy/templates/components/dashboardable-side-menu", ["exports"], function (exports) {
-  exports["default"] = Ember.HTMLBars.template((function () {
-    return {
-      meta: {
-        "revision": "Ember@1.13.11",
-        "loc": {
-          "source": null,
-          "start": {
-            "line": 1,
-            "column": 0
-          },
-          "end": {
-            "line": 15,
-            "column": 0
-          }
-        },
-        "moduleName": "dummy/templates/components/dashboardable-side-menu.hbs"
-      },
-      arity: 0,
-      cachedFragment: null,
-      hasRendered: false,
-      buildFragment: function buildFragment(dom) {
-        var el0 = dom.createDocumentFragment();
-        var el1 = dom.createElement("div");
-        dom.setAttribute(el1, "class", "dashboardable-side-menu col-md-2");
-        var el2 = dom.createTextNode("\n  ");
-        dom.appendChild(el1, el2);
-        var el2 = dom.createElement("div");
-        dom.setAttribute(el2, "class", "side-menu-header");
-        var el3 = dom.createTextNode("\n    Here comes something\n  ");
-        dom.appendChild(el2, el3);
-        dom.appendChild(el1, el2);
-        var el2 = dom.createTextNode("\n  ");
-        dom.appendChild(el1, el2);
-        var el2 = dom.createElement("ul");
-        dom.setAttribute(el2, "class", "side-menu-list");
-        var el3 = dom.createTextNode("\n    ");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createElement("li");
-        dom.setAttribute(el3, "class", "side-menu-item");
-        var el4 = dom.createTextNode("Item");
-        dom.appendChild(el3, el4);
-        dom.appendChild(el2, el3);
-        var el3 = dom.createTextNode("\n    ");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createElement("li");
-        dom.setAttribute(el3, "class", "side-menu-item");
-        var el4 = dom.createTextNode("Item");
-        dom.appendChild(el3, el4);
-        dom.appendChild(el2, el3);
-        var el3 = dom.createTextNode("\n    ");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createElement("li");
-        dom.setAttribute(el3, "class", "side-menu-item");
-        var el4 = dom.createTextNode("Item");
-        dom.appendChild(el3, el4);
-        dom.appendChild(el2, el3);
-        var el3 = dom.createTextNode("\n    ");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createElement("li");
-        dom.setAttribute(el3, "class", "side-menu-item");
-        var el4 = dom.createTextNode("Item");
-        dom.appendChild(el3, el4);
-        dom.appendChild(el2, el3);
-        var el3 = dom.createTextNode("\n    ");
-        dom.appendChild(el2, el3);
-        var el3 = dom.createElement("li");
-        dom.setAttribute(el3, "class", "side-menu-item");
-        var el4 = dom.createTextNode("Item");
-        dom.appendChild(el3, el4);
-        dom.appendChild(el2, el3);
-        var el3 = dom.createTextNode("\n  ");
-        dom.appendChild(el2, el3);
-        dom.appendChild(el1, el2);
-        var el2 = dom.createTextNode("\n");
-        dom.appendChild(el1, el2);
-        dom.appendChild(el0, el1);
-        var el1 = dom.createTextNode("\n\n");
-        dom.appendChild(el0, el1);
-        var el1 = dom.createComment("");
-        dom.appendChild(el0, el1);
-        var el1 = dom.createTextNode("\n");
-        dom.appendChild(el0, el1);
-        return el0;
-      },
-      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-        var morphs = new Array(1);
-        morphs[0] = dom.createMorphAt(fragment, 2, 2, contextualElement);
-        return morphs;
-      },
-      statements: [["content", "yield", ["loc", [null, [14, 0], [14, 9]]]]],
-      locals: [],
-      templates: []
-    };
-  })());
-});
-define("dummy/templates/components/ember-chartnew", ["exports"], function (exports) {
-  exports["default"] = Ember.HTMLBars.template((function () {
-    return {
-      meta: {
-        "revision": "Ember@1.13.11",
-        "loc": {
-          "source": null,
-          "start": {
-            "line": 1,
-            "column": 0
-          },
-          "end": {
-            "line": 3,
-            "column": 0
-          }
-        },
-        "moduleName": "dummy/templates/components/ember-chartnew.hbs"
-      },
-      arity: 0,
-      cachedFragment: null,
-      hasRendered: false,
-      buildFragment: function buildFragment(dom) {
-        var el0 = dom.createDocumentFragment();
-        var el1 = dom.createElement("canvas");
-        dom.setAttribute(el1, "class", "canvas-chartnew");
-        dom.appendChild(el0, el1);
-        var el1 = dom.createTextNode("\n");
-        dom.appendChild(el0, el1);
-        var el1 = dom.createComment("");
-        dom.appendChild(el0, el1);
-        var el1 = dom.createTextNode("\n");
-        dom.appendChild(el0, el1);
-        return el0;
-      },
-      buildRenderNodes: function buildRenderNodes(dom, fragment, contextualElement) {
-        var element0 = dom.childAt(fragment, [0]);
-        var morphs = new Array(3);
-        morphs[0] = dom.createAttrMorph(element0, 'height');
-        morphs[1] = dom.createAttrMorph(element0, 'width');
-        morphs[2] = dom.createMorphAt(fragment, 2, 2, contextualElement);
-        return morphs;
-      },
-      statements: [["attribute", "height", ["get", "processedHeight", ["loc", [null, [1, 41], [1, 56]]]]], ["attribute", "width", ["get", "processedWidth", ["loc", [null, [1, 67], [1, 81]]]]], ["content", "yield", ["loc", [null, [2, 0], [2, 9]]]]],
+      statements: [["inline", "c3-chart", [], ["data", ["subexpr", "@mut", [["get", "options.data", ["loc", [null, [1, 16], [1, 28]]]]], [], []], "axis", ["subexpr", "@mut", [["get", "options.axis", ["loc", [null, [1, 34], [1, 46]]]]], [], []]], ["loc", [null, [1, 0], [1, 48]]]]],
       locals: [],
       templates: []
     };
@@ -913,11 +688,11 @@ define("dummy/templates/index", ["exports"], function (exports) {
             "loc": {
               "source": null,
               "start": {
-                "line": 18,
+                "line": 17,
                 "column": 2
               },
               "end": {
-                "line": 21,
+                "line": 20,
                 "column": 2
               }
             },
@@ -954,7 +729,7 @@ define("dummy/templates/index", ["exports"], function (exports) {
             morphs[2] = dom.createMorphAt(fragment, 3, 3, contextualElement);
             return morphs;
           },
-          statements: [["attribute", "class", ["concat", [["get", "item.options.icon", ["loc", [null, [19, 17], [19, 34]]]], "-chart"]]], ["element", "action", ["removeCard", ["get", "item", ["loc", [null, [19, 100], [19, 104]]]]], [], ["loc", [null, [19, 78], [19, 106]]]], ["inline", "component", [["get", "item.name", ["loc", [null, [20, 16], [20, 25]]]]], ["options", ["subexpr", "@mut", [["get", "item.options", ["loc", [null, [20, 34], [20, 46]]]]], [], []]], ["loc", [null, [20, 4], [20, 48]]]]],
+          statements: [["attribute", "class", ["concat", [["get", "item.options.icon", ["loc", [null, [18, 17], [18, 34]]]], "-chart"]]], ["element", "action", ["removeCard", ["get", "item", ["loc", [null, [18, 100], [18, 104]]]]], [], ["loc", [null, [18, 78], [18, 106]]]], ["inline", "component", [["get", "item.name", ["loc", [null, [19, 16], [19, 25]]]]], ["options", ["subexpr", "@mut", [["get", "item.options", ["loc", [null, [19, 34], [19, 46]]]]], [], []]], ["loc", [null, [19, 4], [19, 48]]]]],
           locals: [],
           templates: []
         };
@@ -965,11 +740,11 @@ define("dummy/templates/index", ["exports"], function (exports) {
           "loc": {
             "source": null,
             "start": {
-              "line": 17,
+              "line": 16,
               "column": 0
             },
             "end": {
-              "line": 22,
+              "line": 21,
               "column": 0
             }
           },
@@ -991,7 +766,7 @@ define("dummy/templates/index", ["exports"], function (exports) {
           dom.insertBoundary(fragment, null);
           return morphs;
         },
-        statements: [["block", "dashboardable-card", [], ["class", ["subexpr", "@mut", [["get", "item.options.classesToAdd", ["loc", [null, [18, 30], [18, 55]]]]], [], []]], 0, null, ["loc", [null, [18, 2], [21, 25]]]]],
+        statements: [["block", "dashboardable-card", [], ["class", ["subexpr", "@mut", [["get", "item.options.classesToAdd", ["loc", [null, [17, 30], [17, 55]]]]], [], []]], 0, null, ["loc", [null, [17, 2], [20, 25]]]]],
         locals: ["item"],
         templates: [child0]
       };
@@ -1006,7 +781,7 @@ define("dummy/templates/index", ["exports"], function (exports) {
             "column": 0
           },
           "end": {
-            "line": 23,
+            "line": 22,
             "column": 0
           }
         },
@@ -1019,7 +794,7 @@ define("dummy/templates/index", ["exports"], function (exports) {
         var el0 = dom.createDocumentFragment();
         var el1 = dom.createComment("");
         dom.appendChild(el0, el1);
-        var el1 = dom.createTextNode("\n\n");
+        var el1 = dom.createTextNode("\n");
         dom.appendChild(el0, el1);
         var el1 = dom.createComment("");
         dom.appendChild(el0, el1);
@@ -1033,7 +808,7 @@ define("dummy/templates/index", ["exports"], function (exports) {
         dom.insertBoundary(fragment, null);
         return morphs;
       },
-      statements: [["block", "dashboardable-card", [], ["classesToAdd", "full-width"], 0, null, ["loc", [null, [1, 0], [14, 23]]]], ["block", "each", [["get", "dashboard.components", ["loc", [null, [17, 8], [17, 28]]]]], [], 1, null, ["loc", [null, [17, 0], [22, 9]]]]],
+      statements: [["block", "dashboardable-card", [], ["class", "full-width"], 0, null, ["loc", [null, [1, 0], [14, 23]]]], ["block", "each", [["get", "dashboard.components", ["loc", [null, [16, 8], [16, 28]]]]], [], 1, null, ["loc", [null, [16, 0], [21, 9]]]]],
       locals: [],
       templates: [child0, child1]
     };
@@ -1065,7 +840,7 @@ catch(err) {
 });
 
 if (!runningTests) {
-  require("dummy/app")["default"].create({"name":"ember-cli-dashboardable","version":"0.0.0+e822a62f"});
+  require("dummy/app")["default"].create({"name":"ember-cli-dashboardable","version":"0.0.0+1a0df9c9"});
 }
 
 /* jshint ignore:end */

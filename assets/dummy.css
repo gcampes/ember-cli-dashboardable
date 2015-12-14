@@ -113,6 +113,9 @@ h1 {
     width: calc(100% - 40px);
   }
 }
+.dashboardable-card.card-default {
+  height: 300px;
+}
 .dashboardable-card h4 {
   font-size: 18px;
   font-weight: 200;
@@ -139,6 +142,9 @@ h1 {
   margin-right: 5px;
   font-family: "FontAwesome";
   content: "\f200";
+}
+.dashboardable-card.double-width {
+  width: calc((100% - 60px) / 3 * 2);
 }
 .dashboardable-card.full-width {
   width: calc(100% - 40px);
@@ -197,6 +203,9 @@ h1 {
   border-bottom: 4px solid #828282;
   top: 1px;
 }
+.dashboardable-card div {
+  height: 100%;
+}
 .dashboardable-card .ember-chartnew {
   margin: 15px;
 }
@@ -225,5 +234,10 @@ h1 {
 .dropdown-menu li div:hover {
   background-color: #B9B9B9;
   border-bottom: 2px solid #939393;
+}
+.ember-c3-chart {
+  width: calc(100% - 20px);
+  height: calc(100% - 70px) !important;
+  margin: 10px;
 }
 /*# sourceMappingURL=/assets/dummy.css.map */
