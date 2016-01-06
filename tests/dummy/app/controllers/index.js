@@ -50,7 +50,7 @@ export default Ember.Controller.extend({
             }
           },
           'icon': 'bar',
-          'classesToAdd': 'card-default double-width',
+          'classesToAdd': 'card-default',
           'data': this.randomHorizontalBarChartData()
         }
       };
@@ -81,7 +81,7 @@ export default Ember.Controller.extend({
         'options': {
           'text': 'Lorem ipsum'
         }
-      }
+      };
     }
     return null;
   },
@@ -135,7 +135,7 @@ export default Ember.Controller.extend({
           ["Dolor", Math.round(Math.random()*100)],
         ],
         type : 'pie'
-    }
+    };
   },
 
   randomDoughnutChartData(){
@@ -151,7 +151,7 @@ export default Ember.Controller.extend({
         ["Dolor", Math.round(Math.random()*100)],
       ],
       type : 'donut'
-    }
+    };
   },
 
 
